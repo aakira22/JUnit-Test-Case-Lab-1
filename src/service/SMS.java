@@ -45,9 +45,14 @@ public class SMS {
                 if (birthDate.matches("[0-9\\\\-]+") && birthDate.length() == 10) {
                     String[] parsedBirthDate = birthDate.split("-");
                     if (parsedBirthDate.length == 3) {
+
                         birthYear = parsedBirthDate[0];
                         birthMonth = parsedBirthDate[1];
                         birthDay = parsedBirthDate[2];
+
+                        if(birthYear.isEmpty() || birthMonth.isEmpty() || birthDay.isEmpty() ){
+                            return valid;
+                        }
 
                         try {
 
@@ -60,8 +65,8 @@ public class SMS {
                         }
 
                         } catch (DateTimeParseException e) {
-                                        validDOB = false;
-                                    }
+                            validDOB = false;
+                        }
 
                     }
                 }

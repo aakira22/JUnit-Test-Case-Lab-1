@@ -62,10 +62,16 @@ public class TestUserInformation {
 
     @Test
     public void testWrongDate() {
-        String message = "Marco Valmores , 0222-09-10 , Marikina City";
+        String message = "Marco Valmores , 09-10-1973 , Marikina City";
         boolean result = SMS.userInformationChecker(message);
         assertFalse(result);
     }
 
+    @Test
+    public void testDateEmpty() {
+        String message = "Marco Valmores , 1973--10 , Marikina City";
+        boolean result = SMS.userInformationChecker(message);
+        assertFalse(result);
+    }
 
 }
