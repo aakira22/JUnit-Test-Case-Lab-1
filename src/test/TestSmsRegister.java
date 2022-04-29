@@ -51,7 +51,7 @@ public class TestSmsRegister {
 
     @Test
     public void testInsideWhiteSpace() {
-        String message = "re gister";
+        String message = "re gister, ";
         boolean result = SmsRegister.smsRegisterChecker(message);
         assertFalse(result);
     }
@@ -63,5 +63,4 @@ public class TestSmsRegister {
         assertFalse(result);
     }
 
-    //to add more cases
 }

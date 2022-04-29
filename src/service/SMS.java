@@ -23,49 +23,60 @@ public class SMS {
             String birthDay = null;
             LocalDate dob = null;
 
-            //String message = " Marco Valmores , 1973-09-10 , Marikina City ";
-            String[] userInfo = message.split(",", 3);
 
             //Check if 3 inputs are entered
-            fullName = userInfo[0].trim();
-            birthDate = userInfo[1].trim();
-            address = userInfo[2].trim();
+            try {
+                String[] userInfo = message.split(",", 3);
+                fullName = userInfo[0].trim();
+                birthDate = userInfo[1].trim();
+                address = userInfo[2].trim();
 
+            } catch (Exception e){
+                return valid;
+            }
+
+            //Check if Full Name is valid with First and Last name
             if (fullName.split(" ").length >= 2) {
                 validName = true;
             }
 
             //Check if Date is valid
-            if (birthDate.matches("[0-9\\\\-]+") && birthDate.length() == 10) {
-                String[] parsedBirthDate = birthDate.split("-");
-                if (parsedBirthDate.length == 3) {
-                    birthYear = parsedBirthDate[0];
-                    birthMonth = parsedBirthDate[1];
-                    birthDay = parsedBirthDate[2];
+            //Check if birthdate input is only digits and "-" character and if length is 10 (yyyy-mm-dd)
+                if (birthDate.matches("[0-9\\\\-]+") && birthDate.length() == 10) {
+                    String[] parsedBirthDate = birthDate.split("-");
+                    if (parsedBirthDate.length == 3) {
+                        birthYear = parsedBirthDate[0];
+                        birthMonth = parsedBirthDate[1];
+                        birthDay = parsedBirthDate[2];
 
-                    try {
+                        try {
+
+                        //parse of date to yyyy-mm-dd
                         dob = LocalDate.parse(birthDate);
-                    } catch (DateTimeParseException e) {
-                        validDOB = false;
-                    }
 
-                    if (dob.compareTo(LocalDate.now()) >= 0) {
-                        validDOB = true;
+                        //check if input date is not a future date
+                        if (dob.compareTo(LocalDate.now()) <= 0 && dob.compareTo(LocalDate.now()) >= -122) {
+                            validDOB = true;
+                        }
+
+                        } catch (DateTimeParseException e) {
+                                        validDOB = false;
+                                    }
+
                     }
                 }
-                ;
-            }
 
-            //Check if address is valid
-            if (address.length() == 1) {
+
+            //Check if address is valid(e.g. not empty string)
+            if (address.length() >= 1) {
                 validAddress = true;
             }
-
 
             //Check if all three is valid
             if (validName && validDOB && validAddress) {
                 valid = true;
             }
+
             return valid;
         }
     }
